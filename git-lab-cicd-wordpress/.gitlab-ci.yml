@@ -1,0 +1,38 @@
+build-job:
+  stage: build
+  script:
+    - mysql -e "show databases;"
+  tags:
+    - nhannd
+test-job1:
+  stage: test
+  script:
+    - chown -R gitlab-runner:gitlab-runner /var/www/wordpress
+    - chmod -R 755 /var/www/wordpress/
+    - cp -r wordpress/* /var/www/wordpress/
+    - mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+    - sed -i -e "s/database_name_here/${WORD_PRESS_DBNAME}/" /var/www/wordpress/wp-config.php
+    - sed -i -e "s/username_here/${USER_NAME}/" /var/www/wordpress/wp-config.php
+    - sed -i -e "s/password_here/${PASSWORD}/" /var/www/wordpress/wp-config.php
+  tags:
+    - nhannd
+
+test-job2:
+  stage: test
+  script:
+    - chown -R gitlab-runner:gitlab-runner /var/www/wordpress
+    - chmod -R 775 /var/www/wordpress 
+    - cp -r wordpress/* /var/www/wordpress/
+    - mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+    - sed -i -e "s/database_name_here/${WORD_PRESS_DBNAME1}/" /var/www/wordpress/wp-config.php
+    - sed -i -e "s/username_here/${USER_NAME1}/" /var/www/wordpress/wp-config.php
+    - sed -i -e "s/password_here/${PASSWORD1}/" /var/www/wordpress/wp-config.php
+  tags:
+    - nhannd1
+deploy-prod:
+  stage: deploy
+  script:
+    - curl 192.168.42.131
+    - curl 192.168.42.132
+  tags:
+    - nhannd

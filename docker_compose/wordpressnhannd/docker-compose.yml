@@ -1,0 +1,54 @@
+version: "3"
+
+services: 
+  # container PHP
+  nhannd-php:
+    container_name: php-product
+    image: "php:nhanlocal"
+    hostname: php-nhannd
+    restart: always
+    environment: 
+      WORDPRESS_USER: wordpress
+      WORDPRESS_PASSWORD: mypassword
+      WORDPRESS_DATABASE: wordpress_db
+      WORDPRESS_DB_HOST: mysql01:3306
+    networks: 
+      - my-networks
+    volumes: 
+      - dir-www:/var/www/html
+  # container HTTPD
+  nhannd-httpd:
+    container_name: c-httpd
+    image: "httpd:nhanlocal"
+    hostname: httpd-nhannd
+    restart: always
+    networks: 
+      - my-networks
+    ports: 
+      - "8086:80"
+      - "443:443"
+    volumes: 
+      - dir-www:/var/www/html
+  # mysql
+  nhand-mysql:
+    container_name: mysql01
+    image: "mysql:5.7"
+    hostname: mysql01
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: abc123
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: mypassword
+    networks: 
+      - my-networks
+    volumes: 
+      - /wordpressnhannd/db:/var/lib/mysql
+#Network
+networks: 
+  my-networks:
+   driver: bridge
+#volumes
+volumes: 
+  dir-www:
+    driver: local
