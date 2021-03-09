@@ -7,7 +7,6 @@ ENV DATABASE_NAME=wordpress \
 ADD https://wordpress.org/latest.tar.gz /latest.tar.gz
 ADD ./start.sh /start.sh
 EXPOSE 80 3306
-CMD ["/bin/bash", "start.sh"]
 RUN apt update \
     && apt install curl net-tools expect mariadb-server mlocate vim nano procps wget awscli tar -y \
     && apt install nginx -y \
@@ -21,3 +20,4 @@ ADD ./mysite.conf /etc/nginx/sites-available/mysite.conf
 RUN mv /etc/nginx/sites-available/mysite.conf /etc/nginx/sites-available/mysite \
     && ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/mysite \
     && rm /etc/nginx/sites-enabled/default
+CMD ["/bin/bash", "start.sh"]
