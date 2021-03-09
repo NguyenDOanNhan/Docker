@@ -7,5 +7,6 @@ sed -i -e "s/password_here/${DATABASE_PASSWORD_USER}/" /var/www/wordpress/wp-con
 
 mysql -uroot -p${PASSWORD_ROOTMYSQL} -e "CREATE DATABASE ${DATABASE_NAME};"
 mysql -uroot -p${PASSWORD_ROOTMYSQL} -e "GRANT ALL PRIVILEGES ON *.* TO '${DATABASE_USER}'@'localhost' IDENTIFIED BY '${DATABASE_PASSWORD_USER}';"
+mysql -uroot -p${PASSWORD_ROOTMYSQL} -e "GRANT ALL PRIVILEGES ON *.* TO '${DATABASE_USER}'@'%' IDENTIFIED BY '${DATABASE_PASSWORD_USER}';"
 mysql -uroot -p${PASSWORD_ROOTMYSQL} -e "FLUSH PRIVILEGES;"
 nginx -g 'daemon off;'
