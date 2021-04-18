@@ -166,6 +166,7 @@ COPY apache-tomcat-9.0.45.tar.gz ~
 COPY guacamole-server-1.2.0.tar.gz ~
 COPY guacamole-1.2.0.war ~
 COPY tomcat.service /etc/systemd/system/tomcat.service
+COPY user-mapping.xml /etc/guacamole/user-mapping.xml
 WORKDIR ~
 RUN apt update && \
 apt install -y software-properties-common nano make vim net-tools htop gcc vim curl wget g++ libcairo2-dev libjpeg-turbo8-dev libpng-dev \
